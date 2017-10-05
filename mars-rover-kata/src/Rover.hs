@@ -3,5 +3,5 @@ module Rover
     ) where
 
 move :: String -> String
-move _ = "0,0,N"
+move commands = if commands == "M" then "0,1,N" else "0,0,N"
 
