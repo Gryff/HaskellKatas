@@ -12,7 +12,10 @@ movement [] position = position
 movement (command:commands) position = movement commands (executeCommand command position)
 
 executeCommand :: Char -> Position -> Position
-executeCommand command (x, y, dir) = if command == 'M' then (x, y + 1, dir) else (x, y, 'W')
+executeCommand command (x, y, dir) = if command == 'M' then (x, y + 1, dir) else (x, y, rotateLeft dir)
+
+rotateLeft :: Char -> Char
+rotateLeft dir = if dir == 'N' then 'W' else 'S'
 
 initialPosition :: Position
 initialPosition = (0, 0, 'N')
