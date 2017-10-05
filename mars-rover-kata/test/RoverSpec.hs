@@ -10,4 +10,5 @@ main = hspec $ do
     it "should move north" $ do
       move "M" `shouldBe` "0,1,N"
       move "MM" `shouldBe` "0,2,N"
+      move "MMMMM" `shouldBe` "0,5,N"
 
