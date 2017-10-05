@@ -12,3 +12,6 @@ main = hspec $ do
       move "MM" `shouldBe` "0,2,N"
       move "MMMMM" `shouldBe` "0,5,N"
 
+    it "should rotate left" $ do
+      move "L" `shouldBe` "0,0,W"
+
