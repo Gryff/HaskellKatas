@@ -3,5 +3,15 @@ module Rover
     ) where
 
 move :: String -> String
-move commands = if commands == "M" then "0,1,N" else if commands == "MM" then "0,2,N" else "0,0,N"
+move commands = toString (movement commands initialPosition)
+
+movement :: String -> (Int, Int, Char) -> (Int, Int, Char)
+movement [] position = position
+movement (command:commands) (x, y, dir) = movement commands (x, y + 1, dir)
+
+initialPosition :: (Int, Int, Char)
+initialPosition = (0, 0, 'N')
+
+toString :: (Int, Int, Char) -> String
+toString (x, y, dir) = show x ++ "," ++ show y ++ "," ++ [dir]
 
