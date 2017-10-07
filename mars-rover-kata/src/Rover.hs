@@ -2,7 +2,8 @@ module Rover
     ( move
     ) where
 
-type Position = (Int, Int, Char)
+type Direction = Char
+type Position = (Int, Int, Direction)
 
 move :: String -> String
 move commands = toString (movement commands initialPosition)
@@ -15,7 +16,7 @@ executeCommand command (x, y, dir)
   | command == 'M' = (x, y + 1, dir)
   | otherwise = (x, y, rotateLeft dir)
 
-rotateLeft :: Char -> Char
+rotateLeft :: Direction -> Direction
 rotateLeft dir
   | dir == 'N' = 'W'
   | dir == 'W' = 'S'
