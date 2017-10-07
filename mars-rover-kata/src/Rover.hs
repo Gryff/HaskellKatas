@@ -8,8 +8,7 @@ move :: String -> String
 move commands = toString (movement commands initialPosition)
 
 movement :: String -> Position -> Position
-movement [] position = position
-movement (command:commands) position = movement commands (executeCommand command position)
+movement commands position = foldr executeCommand position commands
 
 executeCommand :: Char -> Position -> Position
 executeCommand command (x, y, dir) = if command == 'M' then (x, y + 1, dir) else (x, y, rotateLeft dir)
