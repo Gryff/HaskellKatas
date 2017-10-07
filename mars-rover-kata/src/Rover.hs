@@ -2,7 +2,7 @@ module Rover
     ( move
     ) where
 
-type Direction = Char
+data Direction = North | East | South | West
 type Position = (Int, Int, Direction)
 
 move :: String -> String
@@ -18,19 +18,26 @@ executeCommand command (x, y, dir)
   | command == 'R' = (x, y, rotateRight dir)
 
 rotateLeft :: Direction -> Direction
-rotateLeft dir
-  | dir == 'N' = 'W'
-  | dir == 'W' = 'S'
-  | dir == 'E' = 'N'
-  | dir == 'S' = 'E'
+rotateLeft North = West
+rotateLeft West = South
+rotateLeft South = East
+rotateLeft East = North
 
 rotateRight :: Direction -> Direction
-rotateRight dir
-  | dir == 'N' = 'E'
+rotateRight North = East
+rotateRight East = South
+rotateRight South = West
+rotateRight West = North
 
 initialPosition :: Position
-initialPosition = (0, 0, 'N')
+initialPosition = (0, 0, North)
 
 toString :: Position -> String
-toString (x, y, dir) = show x ++ "," ++ show y ++ "," ++ [dir]
+toString (x, y, dir) = show x ++ "," ++ show y ++ "," ++ dirToString dir
+
+dirToString :: Direction -> String
+dirToString North = "N"
+dirToString East = "E"
+dirToString South = "S"
+dirToString West = "W"
 
