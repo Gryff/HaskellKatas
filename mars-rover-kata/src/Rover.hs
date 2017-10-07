@@ -13,9 +13,12 @@ movement commands position = foldr executeCommand position commands
 
 executeCommand :: Char -> Position -> Position
 executeCommand command (x, y, dir)
-  | command == 'M' = (x, y + 1, dir)
+  | command == 'M' = moveForward (x, y, dir)
   | command == 'L' = (x, y, rotateLeft dir)
   | command == 'R' = (x, y, rotateRight dir)
+
+moveForward :: Position -> Position
+moveForward (x, y, North) = (x, y + 1, North)
 
 rotateLeft :: Direction -> Direction
 rotateLeft North = West
