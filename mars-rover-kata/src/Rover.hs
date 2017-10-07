@@ -14,7 +14,8 @@ movement commands position = foldr executeCommand position commands
 executeCommand :: Char -> Position -> Position
 executeCommand command (x, y, dir)
   | command == 'M' = (x, y + 1, dir)
-  | otherwise = (x, y, rotateLeft dir)
+  | command == 'L' = (x, y, rotateLeft dir)
+  | command == 'R' = (x, y, rotateRight dir)
 
 rotateLeft :: Direction -> Direction
 rotateLeft dir
@@ -22,6 +23,10 @@ rotateLeft dir
   | dir == 'W' = 'S'
   | dir == 'E' = 'N'
   | dir == 'S' = 'E'
+
+rotateRight :: Direction -> Direction
+rotateRight dir
+  | dir == 'N' = 'E'
 
 initialPosition :: Position
 initialPosition = (0, 0, 'N')

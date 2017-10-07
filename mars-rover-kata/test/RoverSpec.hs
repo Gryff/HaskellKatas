@@ -18,3 +18,6 @@ main = hspec $ do
       move "LLL" `shouldBe` "0,0,E"
       move "LLLL" `shouldBe` "0,0,N"
 
+    it "should rotate right" $ do
+      move "R" `shouldBe` "0,0,E"
+
