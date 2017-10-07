@@ -20,7 +20,7 @@ rotateLeft dir
   | dir == 'N' = 'W'
   | dir == 'W' = 'S'
   | dir == 'E' = 'N'
-  | otherwise = 'E'
+  | dir == 'S' = 'E'
 
 initialPosition :: Position
 initialPosition = (0, 0, 'N')
