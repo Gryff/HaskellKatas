@@ -20,4 +20,7 @@ main = hspec $ do
 
     it "should rotate right" $ do
       move "R" `shouldBe` "0,0,E"
+      move "RR" `shouldBe` "0,0,S"
+      move "RRR" `shouldBe` "0,0,W"
+      move "RRRR" `shouldBe` "0,0,N"
 
