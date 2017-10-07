@@ -19,6 +19,7 @@ rotateLeft :: Char -> Char
 rotateLeft dir
   | dir == 'N' = 'W'
   | dir == 'W' = 'S'
+  | dir == 'E' = 'N'
   | otherwise = 'E'
 
 initialPosition :: Position

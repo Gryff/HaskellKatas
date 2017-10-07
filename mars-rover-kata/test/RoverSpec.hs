@@ -16,4 +16,5 @@ main = hspec $ do
       move "L" `shouldBe` "0,0,W"
       move "LL" `shouldBe` "0,0,S"
       move "LLL" `shouldBe` "0,0,E"
+      move "LLLL" `shouldBe` "0,0,N"
 
