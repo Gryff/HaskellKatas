@@ -9,10 +9,10 @@ move :: String -> String
 move commands = toString (movement commands initialPosition)
 
 movement :: String -> Position -> Position
-movement commands position = foldr executeCommand position commands
+movement commands position = foldl executeCommand position commands
 
-executeCommand :: Char -> Position -> Position
-executeCommand command (x, y, dir)
+executeCommand :: Position -> Char -> Position
+executeCommand (x, y, dir) command
   | command == 'M' = moveForward (x, y, dir)
   | command == 'L' = (x, y, rotateLeft dir)
   | command == 'R' = (x, y, rotateRight dir)
