@@ -29,4 +29,5 @@ main = hspec $ do
 
     it "should move east" $ do
       move "RM" `shouldBe` "1,0,E"
+      move "RMMMMMMMMMM" `shouldBe` "0,0,E"
 
