@@ -21,6 +21,7 @@ moveForward :: Position -> Position
 moveForward (x, y, North) = (x, (y + 1) `mod` 10, North)
 moveForward (x, y, East) = ((x + 1) `mod` 10, y, East)
 moveForward (x, y, West) = ((x - 1) `mod` 10, y, West)
+moveForward (x, y, South) = (x, (y - 1) `mod` 10, South)
 
 rotateLeft :: Direction -> Direction
 rotateLeft North = West

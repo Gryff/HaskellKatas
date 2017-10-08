@@ -34,3 +34,6 @@ main = hspec $ do
     it "should move west" $ do
       move "LM" `shouldBe` "9,0,W"
 
+    it "should move south" $ do
+      move "LLM" `shouldBe` "0,9,S"
+
