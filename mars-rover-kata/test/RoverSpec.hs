@@ -24,6 +24,9 @@ main = hspec $ do
       move "RRR" `shouldBe` "0,0,W"
       move "RRRR" `shouldBe` "0,0,N"
 
-    it "wrap around when hitting the end of the grid" $ do
+    it "should wrap around when hitting the end of the grid" $ do
       move "MMMMMMMMMM" `shouldBe` "0,0,N"
+
+    it "should move east" $ do
+      move "RM" `shouldBe` "1,0,E"
 

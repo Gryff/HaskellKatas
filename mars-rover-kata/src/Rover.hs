@@ -19,6 +19,7 @@ executeCommand (x, y, dir) command
 
 moveForward :: Position -> Position
 moveForward (x, y, North) = (x, (y + 1) `mod` 10, North)
+moveForward (x, y, East) = (x + 1, y, East)
 
 rotateLeft :: Direction -> Direction
 rotateLeft North = West
