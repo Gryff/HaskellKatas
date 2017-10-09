@@ -12,10 +12,10 @@ movement :: String -> Position -> Position
 movement commands position = foldl executeCommand position commands
 
 executeCommand :: Position -> Char -> Position
-executeCommand (x, y, dir) command
-  | command == 'M' = moveForward (x, y, dir)
-  | command == 'L' = (x, y, rotateLeft dir)
-  | command == 'R' = (x, y, rotateRight dir)
+executeCommand position command
+  | command == 'M' = moveForward position
+  | command == 'L' = rotateLeft position
+  | command == 'R' = rotateRight position
 
 moveForward :: Position -> Position
 moveForward (x, y, North) = (x, (y + 1) `mod` 10, North)
@@ -23,17 +23,17 @@ moveForward (x, y, East) = ((x + 1) `mod` 10, y, East)
 moveForward (x, y, West) = ((x - 1) `mod` 10, y, West)
 moveForward (x, y, South) = (x, (y - 1) `mod` 10, South)
 
-rotateLeft :: Direction -> Direction
-rotateLeft North = West
-rotateLeft West = South
-rotateLeft South = East
-rotateLeft East = North
+rotateLeft :: Position -> Position
+rotateLeft (x, y, North) = (x, y, West)
+rotateLeft (x, y, West) = (x, y, South)
+rotateLeft (x, y, South) = (x, y, East)
+rotateLeft (x, y, East) = (x, y, North)
 
-rotateRight :: Direction -> Direction
-rotateRight North = East
-rotateRight East = South
-rotateRight South = West
-rotateRight West = North
+rotateRight :: Position -> Position
+rotateRight (x, y, North) = (x, y, East)
+rotateRight (x, y, East) = (x, y, South)
+rotateRight (x, y, South) = (x, y, West)
+rotateRight (x, y, West) = (x, y, North)
 
 initialPosition :: Position
 initialPosition = (0, 0, North)
