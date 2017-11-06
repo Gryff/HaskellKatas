@@ -10,10 +10,10 @@ move :: String -> [Obstacle] -> String
 move commands obstacles = toString (movement commands obstacles initialPosition)
 
 movement :: String -> [Obstacle] -> Position -> Position
-movement commands _ position = foldl executeCommand position commands
+movement commands obstacles position = foldl (executeCommand obstacles) position commands
 
-executeCommand :: Position -> Char -> Position
-executeCommand position command
+executeCommand :: [Obstacle] -> Position -> Char -> Position
+executeCommand _ position command
   | command == 'M' = moveForward position
   | command == 'L' = rotateLeft position
   | command == 'R' = rotateRight position
