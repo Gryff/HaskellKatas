@@ -40,3 +40,6 @@ main = hspec $ do
     it "should move south" $ do
       moveNoObstacles "LLM" `shouldBe` "0,9,S"
 
+    it "stops when it hits an obstacle" $ do
+      move "MMM" [(0,2)] `shouldBe` "O,0,1,N"
+
