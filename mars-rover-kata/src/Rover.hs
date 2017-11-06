@@ -4,9 +4,10 @@ module Rover
 
 data Direction = North | East | South | West
 type Position = (Int, Int, Direction)
+type Obstacle = (Int, Int)
 
-move :: String -> String
-move commands = toString (movement commands initialPosition)
+move :: String -> [Obstacle] -> String
+move commands _ = toString (movement commands initialPosition)
 
 movement :: String -> Position -> Position
 movement commands position = foldl executeCommand position commands

@@ -2,38 +2,41 @@ import Test.Hspec
 
 import Rover
 
+moveNoObstacles :: String -> String
+moveNoObstacles commands = move commands []
+
 main = hspec $ do
   describe "Rover" $ do
     it "should start at 0,0,N" $
-      move "" `shouldBe` "0,0,N"
+      moveNoObstacles "" `shouldBe` "0,0,N"
 
     it "should move north" $ do
-      move "M" `shouldBe` "0,1,N"
-      move "MM" `shouldBe` "0,2,N"
-      move "MMMMM" `shouldBe` "0,5,N"
+      moveNoObstacles "M" `shouldBe` "0,1,N"
+      moveNoObstacles "MM" `shouldBe` "0,2,N"
+      moveNoObstacles "MMMMM" `shouldBe` "0,5,N"
 
     it "should rotate left" $ do
-      move "L" `shouldBe` "0,0,W"
-      move "LL" `shouldBe` "0,0,S"
-      move "LLL" `shouldBe` "0,0,E"
-      move "LLLL" `shouldBe` "0,0,N"
+      moveNoObstacles "L" `shouldBe` "0,0,W"
+      moveNoObstacles "LL" `shouldBe` "0,0,S"
+      moveNoObstacles "LLL" `shouldBe` "0,0,E"
+      moveNoObstacles "LLLL" `shouldBe` "0,0,N"
 
     it "should rotate right" $ do
-      move "R" `shouldBe` "0,0,E"
-      move "RR" `shouldBe` "0,0,S"
-      move "RRR" `shouldBe` "0,0,W"
-      move "RRRR" `shouldBe` "0,0,N"
+      moveNoObstacles "R" `shouldBe` "0,0,E"
+      moveNoObstacles "RR" `shouldBe` "0,0,S"
+      moveNoObstacles "RRR" `shouldBe` "0,0,W"
+      moveNoObstacles "RRRR" `shouldBe` "0,0,N"
 
     it "should wrap around when hitting the end of the grid" $ do
-      move "MMMMMMMMMM" `shouldBe` "0,0,N"
+      moveNoObstacles "MMMMMMMMMM" `shouldBe` "0,0,N"
 
     it "should move east" $ do
-      move "RM" `shouldBe` "1,0,E"
-      move "RMMMMMMMMMM" `shouldBe` "0,0,E"
+      moveNoObstacles "RM" `shouldBe` "1,0,E"
+      moveNoObstacles "RMMMMMMMMMM" `shouldBe` "0,0,E"
 
     it "should move west" $ do
-      move "LM" `shouldBe` "9,0,W"
+      moveNoObstacles "LM" `shouldBe` "9,0,W"
 
     it "should move south" $ do
-      move "LLM" `shouldBe` "0,9,S"
+      moveNoObstacles "LLM" `shouldBe` "0,9,S"
 
