@@ -7,10 +7,10 @@ type Position = (Int, Int, Direction)
 type Obstacle = (Int, Int)
 
 move :: String -> [Obstacle] -> String
-move commands _ = toString (movement commands initialPosition)
+move commands obstacles = toString (movement commands obstacles initialPosition)
 
-movement :: String -> Position -> Position
-movement commands position = foldl executeCommand position commands
+movement :: String -> [Obstacle] -> Position -> Position
+movement commands _ position = foldl executeCommand position commands
 
 executeCommand :: Position -> Char -> Position
 executeCommand position command
