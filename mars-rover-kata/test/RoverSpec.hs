@@ -42,4 +42,5 @@ main = hspec $ do
 
     it "stops when it hits an obstacle" $ do
       move "MMM" [(0,2)] `shouldBe` "O,0,1,N"
+      move "MMRMMMRM" [(3,1)] `shouldBe` "O,3,2,S"
 

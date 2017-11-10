@@ -19,15 +19,18 @@ executeCommand obstacles position command
   | command == 'R' = Right $ rotateRight position
 
 moveForward :: [Obstacle] -> Position -> Either Position Position
-moveForward obstacles (x, y, North)
-  | isCollision obstacles (x, (y + 1) `mod` 10) == True = Left (x, y, North)
-  | otherwise = Right (x, (y + 1) `mod` 10, North)
-moveForward _ (x, y, East)  = Right ((x + 1) `mod` 10, y, East)
-moveForward _ (x, y, West)  = Right ((x - 1) `mod` 10, y, West)
-moveForward _ (x, y, South) = Right (x, (y - 1) `mod` 10, South)
+moveForward obstacles position
+  | isCollision obstacles (nextPosition position) = Left position
+  | otherwise = Right (nextPosition position)
 
-isCollision :: [Obstacle] -> (Int, Int) -> Bool
-isCollision obstacles position = elem position obstacles
+nextPosition :: Position -> Position
+nextPosition (x, y, North) = (x, (y + 1) `mod` 10, North)
+nextPosition (x, y, West)  = ((x - 1) `mod` 10, y, West)
+nextPosition (x, y, South) = (x, (y - 1) `mod` 10, South)
+nextPosition (x, y, East) = ((x + 1) `mod` 10, y, East)
+
+isCollision :: [Obstacle] -> Position -> Bool
+isCollision obstacles (x, y, _) = elem (x, y) obstacles
 
 rotateLeft :: Position -> Position
 rotateLeft (x, y, North) = (x, y, West)
