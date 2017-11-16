@@ -1,6 +1,8 @@
 module Main where
 
-import Data.String.Strip
+import Bank
+
+something str = bank
 
 main :: IO ()
-main = interact strip
+main = interact something
