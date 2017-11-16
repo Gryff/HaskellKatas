@@ -13,6 +13,6 @@ main = hspec spec
 spec :: Spec
 spec = do
   describe "bank" $ do
-    it "does something" $ do
-      bank `shouldBe` "hello"
+    it "deposits money" $ do
+      deposit (Deposit 100) (Bank 0) `shouldBe` (Bank 100)
 
