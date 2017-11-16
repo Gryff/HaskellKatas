@@ -16,3 +16,6 @@ spec = do
     it "deposits money" $ do
       deposit (Deposit 100) (Bank 0) `shouldBe` (Bank 100)
 
+    it "withdraws money" $ do
+      withdraw (Withdrawal 100) (Bank 300) `shouldBe` (Bank 200)
+
