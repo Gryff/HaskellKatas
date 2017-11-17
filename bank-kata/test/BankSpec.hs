@@ -34,5 +34,5 @@ spec = do
       runState (doWithdrawal 100) newBank `shouldBe` ((), [Withdrawal 100])
 
     it "returns a statement" $ do
-      runState doStatement newBank `shouldBe` ("Desposited 200\nWithdrew 100\nDesposited 3000\n", [Deposit 200, Withdrawal 100, Deposit 3000])
+      fst (runState doStatement newBank) `shouldBe` "Desposited 200\nWithdrew 100\nDesposited 3000\n"
 
