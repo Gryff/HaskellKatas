@@ -8,8 +8,8 @@ data Transaction a = Deposit a | Withdrawal a deriving (Eq, Show)
 newBank = []
 
 deposit :: Int -> State [Transaction Int] ()
-deposit amount = state $ \transactions -> ((), (Deposit amount) : transactions)
+deposit amount = state $ \transactions -> ((), transactions ++ [Deposit amount])
 
 withdraw :: Int -> State [Transaction Int] ()
-withdraw amount = state $ \transactions -> ((), (Withdrawal amount) : transactions)
+withdraw amount = state $ \transactions -> ((), transactions ++ [Withdrawal amount])
 
