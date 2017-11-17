@@ -1,12 +1,15 @@
 module Bank where
 
+import Control.Monad.State
+
 data (Num a) => Bank a = Bank a deriving (Eq, Show)
-data (Num a) => Deposit a = Deposit a
-data (Num a) => Withdrawal a = Withdrawal a
+data Transaction a = Deposit a | Withdrawal a deriving (Eq, Show)
 
-deposit :: Deposit Int -> Bank Int -> Bank Int
-deposit (Deposit amount) (Bank balance) = Bank (balance + amount)
+newBank = []
 
-withdraw :: Withdrawal Int -> Bank Int -> Bank Int
-withdraw (Withdrawal amount) (Bank balance) = Bank (balance - amount)
+deposit :: Int -> State [Transaction Int] ()
+deposit amount = state $ \transactions -> ((), (Deposit amount) : transactions)
+
+withdraw :: Int -> State [Transaction Int] ()
+withdraw amount = state $ \transactions -> ((), (Withdrawal amount) : transactions)
 

@@ -2,6 +2,7 @@ module BankSpec where
 
 import Test.Hspec
 import Test.QuickCheck
+import Control.Monad.State
 
 import Bank
 
@@ -10,12 +11,18 @@ import Bank
 main :: IO ()
 main = hspec spec
 
+doDeposit amount = do
+  deposit amount
+
+doWithdrawal amount = do
+  withdraw amount
+
 spec :: Spec
 spec = do
   describe "bank" $ do
     it "deposits money" $ do
-      deposit (Deposit 100) (Bank 0) `shouldBe` (Bank 100)
+      runState (doDeposit 100) newBank `shouldBe` ((), [Deposit 100])
 
     it "withdraws money" $ do
-      withdraw (Withdrawal 100) (Bank 300) `shouldBe` (Bank 200)
+      runState (doWithdrawal 100) newBank `shouldBe` ((), [Withdrawal 100])
 
