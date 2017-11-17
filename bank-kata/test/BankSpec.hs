@@ -17,6 +17,13 @@ doDeposit amount = do
 doWithdrawal amount = do
   withdraw amount
 
+doStatement = do
+  deposit 200
+  withdraw 100
+  deposit 3000
+  statement <- getStatement
+  return statement
+
 spec :: Spec
 spec = do
   describe "bank" $ do
@@ -25,4 +32,7 @@ spec = do
 
     it "withdraws money" $ do
       runState (doWithdrawal 100) newBank `shouldBe` ((), [Withdrawal 100])
+
+    it "returns a statement" $ do
+      runState doStatement newBank `shouldBe` ("Desposited 200\nWithdrew 100\nDesposited 3000\n", [Deposit 200, Withdrawal 100, Deposit 3000])
 
