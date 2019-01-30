@@ -11,12 +11,6 @@ import Bank
 main :: IO ()
 main = hspec spec
 
-doDeposit amount = do
-  deposit amount
-
-doWithdrawal amount = do
-  withdraw amount
-
 doStatement = do
   deposit 200
   withdraw 100
@@ -29,10 +23,10 @@ spec :: Spec
 spec = do
   describe "bank" $ do
     it "deposits money" $ do
-      runState (doDeposit 100) newBank `shouldBe` ((), [Deposit 100])
+      runState (deposit 100) newBank `shouldBe` ((), [Deposit 100])
 
     it "withdraws money" $ do
-      runState (doWithdrawal 100) newBank `shouldBe` ((), [Withdrawal 100])
+      runState (withdraw 100) newBank `shouldBe` ((), [Withdrawal 100])
 
     it "returns a statement" $ do
       fst (runState doStatement newBank) `shouldBe` "Desposited 200\nWithdrew 100\nDesposited 3000\n"
