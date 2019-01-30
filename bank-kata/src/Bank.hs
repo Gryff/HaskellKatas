@@ -2,7 +2,6 @@ module Bank where
 
 import Control.Monad.State
 
-data Bank a = Bank a deriving (Eq, Show)
 data Transaction a = Deposit a | Withdrawal a deriving (Eq, Show)
 
 newBank = []
