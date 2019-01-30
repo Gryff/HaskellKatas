@@ -24,6 +24,8 @@ doStatement = do
   statement <- getStatement
   return statement
 
+newBank = []
+
 spec :: Spec
 spec = do
   describe "bank" $ do

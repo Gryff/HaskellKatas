@@ -4,8 +4,6 @@ import Control.Monad.State
 
 data Transaction = Deposit Int | Withdrawal Int deriving (Eq, Show)
 
-newBank = []
-
 deposit :: Int -> State [Transaction] ()
 deposit amount = state $ \transactions -> ((), transactions ++ [Deposit amount])
 
