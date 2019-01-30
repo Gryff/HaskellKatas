@@ -23,10 +23,10 @@ spec :: Spec
 spec = do
   describe "bank" $ do
     it "deposits money" $ do
-      runState (deposit 100) newBank `shouldBe` ((), [Deposit 100])
+      execState (deposit 100) newBank `shouldBe` [Deposit 100]
 
     it "withdraws money" $ do
-      runState (withdraw 100) newBank `shouldBe` ((), [Withdrawal 100])
+      execState (withdraw 100) newBank `shouldBe` [Withdrawal 100]
 
     it "returns a statement" $ do
       evalState doStatement newBank `shouldBe` "Desposited 200\nWithdrew 100\nDesposited 3000\n"
