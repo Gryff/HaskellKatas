@@ -3,14 +3,15 @@ module Bank where
 import Control.Monad.State
 
 data Transaction = Deposit Int | Withdrawal Int deriving (Eq, Show)
+type TransactionRepo = State [Transaction]
 
-deposit :: Int -> State [Transaction] ()
+deposit :: Int -> TransactionRepo ()
 deposit amount = modify $ \transactions -> transactions ++ [Deposit amount]
 
-withdraw :: Int -> State [Transaction] ()
+withdraw :: Int -> TransactionRepo ()
 withdraw amount = modify $ \transactions -> transactions ++ [Withdrawal amount]
 
-getStatement :: State [Transaction] String
+getStatement :: TransactionRepo String
 getStatement = gets toStatement
 
 toStatement :: [Transaction] -> String
