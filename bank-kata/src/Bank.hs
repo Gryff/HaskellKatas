@@ -11,7 +11,7 @@ withdraw :: Int -> State [Transaction] ()
 withdraw amount = modify $ \transactions -> transactions ++ [Withdrawal amount]
 
 getStatement :: State [Transaction] String
-getStatement = state $ \transactions -> (toStatement transactions, transactions)
+getStatement = gets $ \transactions -> toStatement transactions
 
 toStatement :: [Transaction] -> String
 toStatement transactions = unlines $ map stringifyTransaction transactions
