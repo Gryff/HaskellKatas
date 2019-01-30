@@ -15,9 +15,14 @@ getStatement :: TransactionRepo String
 getStatement = gets toStatement
 
 toStatement :: [Transaction] -> String
-toStatement transactions = unlines $ map stringifyTransaction transactions
+toStatement transactions = unlines $ map stringifyTransaction (zip balance transactions)
+  where balance = tail $ scanl calculateBalance 0 transactions
 
-stringifyTransaction :: Transaction -> String
-stringifyTransaction (Deposit amount) = "Desposited " ++ (show amount)
-stringifyTransaction (Withdrawal amount) = "Withdrew " ++ (show amount)
+calculateBalance :: Int -> Transaction -> Int
+calculateBalance currentBalance (Deposit amount) = currentBalance + amount
+calculateBalance currentBalance (Withdrawal amount) = currentBalance - amount
+
+stringifyTransaction :: (Int, Transaction) -> String
+stringifyTransaction (currentBalance, (Deposit amount)) = "Desposited " ++ (show amount) ++ " | Balance " ++ (show currentBalance)
+stringifyTransaction (currentBalance, (Withdrawal amount)) = "Withdrew " ++ (show amount) ++ " | Balance " ++ (show currentBalance)
 

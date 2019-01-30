@@ -29,5 +29,5 @@ spec = do
       execState (withdraw 100) newBank `shouldBe` [Withdrawal 100]
 
     it "returns a statement" $ do
-      evalState doStatement newBank `shouldBe` "Desposited 200\nWithdrew 100\nDesposited 3000\n"
+      evalState doStatement newBank `shouldBe` "Desposited 200 | Balance 200\nWithdrew 100 | Balance 100\nDesposited 3000 | Balance 3100\n"
 
