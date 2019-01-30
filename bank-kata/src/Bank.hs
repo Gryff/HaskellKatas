@@ -5,10 +5,10 @@ import Control.Monad.State
 data Transaction = Deposit Int | Withdrawal Int deriving (Eq, Show)
 
 deposit :: Int -> State [Transaction] ()
-deposit amount = state $ \transactions -> ((), transactions ++ [Deposit amount])
+deposit amount = modify $ \transactions -> transactions ++ [Deposit amount]
 
 withdraw :: Int -> State [Transaction] ()
-withdraw amount = state $ \transactions -> ((), transactions ++ [Withdrawal amount])
+withdraw amount = modify $ \transactions -> transactions ++ [Withdrawal amount]
 
 getStatement :: State [Transaction] String
 getStatement = state $ \transactions -> (toStatement transactions, transactions)
