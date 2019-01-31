@@ -8,11 +8,11 @@ newBank = []
 
 main :: IO ()
 main = do
-  let statement = evalState doTheStuff newBank
-  putStr statement
+  runStateT doTheStuff newBank
+  pure ()
 
 doTheStuff = do
   deposit 200
   withdraw 100
   deposit 3000
-  getStatement
+  printStatement putStr
