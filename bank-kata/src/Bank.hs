@@ -18,11 +18,11 @@ toStatement :: [Transaction] -> String
 toStatement transactions = unlines $ map stringifyTransaction (zip balance transactions)
   where balance = tail $ scanl calculateBalance 0 transactions
 
-printStatement :: Monad m => (String -> m ()) -> TransactionRepo m ()
-printStatement printer = do
+printStatement :: (Monad m, MonadStatementPrinter m) => TransactionRepo m ()
+printStatement = do
   transactions <- get
   let statement = toStatement transactions
-  lift $ printer statement
+  lift $ printSt statement
 
 calculateBalance :: Int -> Transaction -> Int
 calculateBalance currentBalance (Deposit amount) = currentBalance + amount
@@ -31,4 +31,10 @@ calculateBalance currentBalance (Withdrawal amount) = currentBalance - amount
 stringifyTransaction :: (Int, Transaction) -> String
 stringifyTransaction (currentBalance, (Deposit amount)) = "Desposited " ++ (show amount) ++ " | Balance " ++ (show currentBalance)
 stringifyTransaction (currentBalance, (Withdrawal amount)) = "Withdrew " ++ (show amount) ++ " | Balance " ++ (show currentBalance)
+
+class MonadStatementPrinter m where
+  printSt :: String -> m ()
+
+instance MonadStatementPrinter IO where
+  printSt = putStr
 

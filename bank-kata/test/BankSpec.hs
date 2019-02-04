@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances #-}
+
 module BankSpec where
 
 import Test.Hspec
@@ -18,7 +20,7 @@ doStatement = do
   deposit 200
   withdraw 100
   deposit 3000
-  printStatement (\statement -> tell statement >> pure ())
+  printStatement
 
 newBank = []
 
@@ -31,6 +33,11 @@ spec = do
     it "withdraws money" $ do
       runIdentity (execStateT (withdraw 100) newBank) `shouldBe` [Withdrawal 100]
 
-    it "returns a statement" $ do
+    it "prints a statement" $ do
       execWriter (evalStateT doStatement newBank) `shouldBe` "Desposited 200 | Balance 200\nWithdrew 100 | Balance 100\nDesposited 3000 | Balance 3100\n"
+
+instance MonadStatementPrinter (Writer String) where
+  printSt str = do
+    tell str
+    pure ()
 

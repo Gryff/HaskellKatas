@@ -15,4 +15,5 @@ doTheStuff = do
   deposit 200
   withdraw 100
   deposit 3000
-  printStatement putStr
+  printStatement
+
