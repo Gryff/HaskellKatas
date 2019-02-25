@@ -37,7 +37,5 @@ spec = do
       execWriter (evalStateT doStatement newBank) `shouldBe` "Desposited 200 | Balance 200\nWithdrew 100 | Balance 100\nDesposited 3000 | Balance 3100\n"
 
 instance MonadStatementPrinter (Writer String) where
-  printSt str = do
-    tell str
-    pure ()
+  printSt = tell
 
