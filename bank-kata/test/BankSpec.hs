@@ -15,12 +15,12 @@ import Bank
 main :: IO ()
 main = hspec spec
 
-doStatement :: TransactionRepo (Writer String) ()
-doStatement = do
-  deposit 200
-  withdraw 100
-  deposit 3000
-  printStatement
+--doStatement :: TransactionRepo (Writer String) ()
+--doStatement = do
+  --deposit 200
+  --withdraw 100
+  --deposit 3000
+  --printStatement
 
 newBank = []
 
@@ -33,8 +33,8 @@ spec = do
     it "withdraws money" $ do
       runIdentity (execStateT (withdraw 100) newBank) `shouldBe` [Withdrawal 100]
 
-    it "prints a statement" $ do
-      execWriter (evalStateT doStatement newBank) `shouldBe` "Desposited 200 | Balance 200\nWithdrew 100 | Balance 100\nDesposited 3000 | Balance 3100\n"
+    --it "prints a statement" $ do
+      --execWriter (evalStateT doStatement newBank) `shouldBe` "Desposited 200 | Balance 200\nWithdrew 100 | Balance 100\nDesposited 3000 | Balance 3100\n"
 
 instance MonadStatementPrinter (Writer String) where
   printSt = tell
