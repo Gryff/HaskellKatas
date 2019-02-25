@@ -39,6 +39,11 @@ spec = do
         \date       || credit || debit || balance\n\
         \01/01/2018 || 100.00 || || 100.00\n"
 
+    it "prints a withdrawal statement" $ do
+      execWriter (evalStateT printStatement [Withdrawal 100 firstOfJan2018]) `shouldBe` "\
+        \date       || credit || debit || balance\n\
+        \01/01/2018 || || 100.00 || -100.00\n"
+
     --it "prints a statement" $ do
       --execWriter (evalStateT doStatement newBank) `shouldBe` "Deposited 200 | Balance 200\nWithdrew 100 | Balance 100\nDesposited 3000 | Balance 3100\n"
 

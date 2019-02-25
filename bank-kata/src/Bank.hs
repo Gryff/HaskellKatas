@@ -39,7 +39,10 @@ stringifyTransaction (currentBalance, (Deposit amount date)) =
   (show amount) ++ ".00" ++ " || || " ++
   (show currentBalance) ++ ".00"
 
-stringifyTransaction (currentBalance, (Withdrawal amount _)) = "Withdrew " ++ (show amount) ++ " | Balance " ++ (show currentBalance)
+stringifyTransaction (currentBalance, (Withdrawal amount date)) =
+  (formatTime defaultTimeLocale "%d/%m/%Y" date) ++ " || || " ++
+  (show amount) ++ ".00" ++ " || " ++
+  (show currentBalance) ++ ".00"
 
 class MonadStatementPrinter m where
   printSt :: String -> m ()
