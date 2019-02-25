@@ -16,15 +16,15 @@ withdraw amount = do
   now <- lift currentDateTime
   modify $ \transactions -> transactions ++ [Withdrawal amount now]
 
-toStatement :: [Transaction] -> String
-toStatement transactions = unlines $ map stringifyTransaction (zip balance transactions)
-  where balance = tail $ scanl calculateBalance 0 transactions
-
 printStatement :: (Monad m, MonadStatementPrinter m) => TransactionRepo m ()
 printStatement = do
   transactions <- get
   let statement = toStatement transactions
   lift $ printSt statement
+
+toStatement :: [Transaction] -> String
+toStatement transactions = unlines $ map stringifyTransaction (zip balance transactions)
+  where balance = tail $ scanl calculateBalance 0 transactions
 
 calculateBalance :: Int -> Transaction -> Int
 calculateBalance currentBalance (Deposit amount _) = currentBalance + amount
