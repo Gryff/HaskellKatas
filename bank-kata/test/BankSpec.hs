@@ -35,10 +35,10 @@ spec = do
       runIdentity (execStateT (withdraw 100) newBank) `shouldBe` [Withdrawal 100 firstOfJan2018]
 
     it "prints a statement" $ do
-      execWriter (evalStateT printStatement [Deposit 100 firstOfJan2018]) `shouldBe` "Desposited 100 | Balance 100\n"
+      execWriter (evalStateT printStatement [Deposit 100 firstOfJan2018]) `shouldBe` "Deposited 100 | Balance 100\n"
 
     --it "prints a statement" $ do
-      --execWriter (evalStateT doStatement newBank) `shouldBe` "Desposited 200 | Balance 200\nWithdrew 100 | Balance 100\nDesposited 3000 | Balance 3100\n"
+      --execWriter (evalStateT doStatement newBank) `shouldBe` "Deposited 200 | Balance 200\nWithdrew 100 | Balance 100\nDesposited 3000 | Balance 3100\n"
 
 instance MonadStatementPrinter (Writer String) where
   printSt = tell

@@ -34,7 +34,7 @@ calculateBalance currentBalance (Deposit amount _) = currentBalance + amount
 calculateBalance currentBalance (Withdrawal amount _) = currentBalance - amount
 
 stringifyTransaction :: (Int, Transaction) -> String
-stringifyTransaction (currentBalance, (Deposit amount _)) = "Desposited " ++ (show amount) ++ " | Balance " ++ (show currentBalance)
+stringifyTransaction (currentBalance, (Deposit amount _)) = "Deposited " ++ (show amount) ++ " | Balance " ++ (show currentBalance)
 stringifyTransaction (currentBalance, (Withdrawal amount _)) = "Withdrew " ++ (show amount) ++ " | Balance " ++ (show currentBalance)
 
 class MonadStatementPrinter m where
