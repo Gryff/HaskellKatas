@@ -7,10 +7,14 @@ data Transaction = Deposit Int UTCTime | Withdrawal Int UTCTime deriving (Eq, Sh
 type TransactionRepo m = StateT [Transaction] m
 
 deposit :: (Monad m, MonadCurrentDateTime m) => Int -> TransactionRepo m ()
-deposit amount = modify $ \transactions -> transactions ++ [Deposit amount firstOfJan2018]
+deposit amount = do
+  now <- lift currentDateTime
+  modify $ \transactions -> transactions ++ [Deposit amount now]
 
 withdraw :: (Monad m, MonadCurrentDateTime m) => Int -> TransactionRepo m ()
-withdraw amount = modify $ \transactions -> transactions ++ [Withdrawal amount firstOfJan2018]
+withdraw amount = do
+  now <- lift currentDateTime
+  modify $ \transactions -> transactions ++ [Withdrawal amount now]
 
 getStatement :: Monad m => TransactionRepo m String
 getStatement = gets toStatement
@@ -44,6 +48,4 @@ class MonadCurrentDateTime m where
 
 instance MonadCurrentDateTime IO where
   currentDateTime = getCurrentTime
-
-firstOfJan2018 = UTCTime (fromGregorian 2018 01 01) (secondsToDiffTime 0)
 

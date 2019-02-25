@@ -7,6 +7,7 @@ import Test.QuickCheck
 import Control.Monad.State
 import Control.Monad.Writer
 import Data.Functor.Identity
+import Data.Time
 
 import Bank
 
@@ -44,4 +45,6 @@ instance MonadStatementPrinter (Writer String) where
 
 instance MonadCurrentDateTime Identity where
   currentDateTime = pure firstOfJan2018
+
+firstOfJan2018 = UTCTime (fromGregorian 2018 01 01) (secondsToDiffTime 0)
 
