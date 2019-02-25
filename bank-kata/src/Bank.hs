@@ -23,15 +23,22 @@ printStatement = do
   lift $ printSt statement
 
 toStatement :: [Transaction] -> String
-toStatement transactions = unlines $ map stringifyTransaction (zip balance transactions)
+toStatement transactions = unlines $ [statementHeader] ++ statementBody
   where balance = tail $ scanl calculateBalance 0 transactions
+        statementBody = map stringifyTransaction (zip balance transactions)
+
+statementHeader = "date       || credit || debit || balance"
 
 calculateBalance :: Int -> Transaction -> Int
 calculateBalance currentBalance (Deposit amount _) = currentBalance + amount
 calculateBalance currentBalance (Withdrawal amount _) = currentBalance - amount
 
 stringifyTransaction :: (Int, Transaction) -> String
-stringifyTransaction (currentBalance, (Deposit amount _)) = "Deposited " ++ (show amount) ++ " | Balance " ++ (show currentBalance)
+stringifyTransaction (currentBalance, (Deposit amount date)) =
+  (formatTime defaultTimeLocale "%d/%m/%Y" date) ++ " || " ++
+  (show amount) ++ ".00" ++ " || || " ++
+  (show currentBalance) ++ ".00"
+
 stringifyTransaction (currentBalance, (Withdrawal amount _)) = "Withdrew " ++ (show amount) ++ " | Balance " ++ (show currentBalance)
 
 class MonadStatementPrinter m where
