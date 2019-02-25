@@ -16,9 +16,6 @@ withdraw amount = do
   now <- lift currentDateTime
   modify $ \transactions -> transactions ++ [Withdrawal amount now]
 
-getStatement :: Monad m => TransactionRepo m String
-getStatement = gets toStatement
-
 toStatement :: [Transaction] -> String
 toStatement transactions = unlines $ map stringifyTransaction (zip balance transactions)
   where balance = tail $ scanl calculateBalance 0 transactions
