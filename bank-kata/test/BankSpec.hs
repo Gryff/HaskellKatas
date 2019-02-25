@@ -42,3 +42,6 @@ spec = do
 instance MonadStatementPrinter (Writer String) where
   printSt = tell
 
+instance MonadCurrentDateTime Identity where
+  currentDateTime = pure firstOfJan2018
+

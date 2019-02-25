@@ -6,10 +6,10 @@ import Data.Time
 data Transaction = Deposit Int UTCTime | Withdrawal Int UTCTime deriving (Eq, Show)
 type TransactionRepo m = StateT [Transaction] m
 
-deposit :: Monad m => Int -> TransactionRepo m ()
+deposit :: (Monad m, MonadCurrentDateTime m) => Int -> TransactionRepo m ()
 deposit amount = modify $ \transactions -> transactions ++ [Deposit amount firstOfJan2018]
 
-withdraw :: Monad m => Int -> TransactionRepo m ()
+withdraw :: (Monad m, MonadCurrentDateTime m) => Int -> TransactionRepo m ()
 withdraw amount = modify $ \transactions -> transactions ++ [Withdrawal amount firstOfJan2018]
 
 getStatement :: Monad m => TransactionRepo m String
@@ -38,6 +38,12 @@ class MonadStatementPrinter m where
 
 instance MonadStatementPrinter IO where
   printSt = putStr
+
+class MonadCurrentDateTime m where
+  currentDateTime :: m UTCTime
+
+instance MonadCurrentDateTime IO where
+  currentDateTime = getCurrentTime
 
 firstOfJan2018 = UTCTime (fromGregorian 2018 01 01) (secondsToDiffTime 0)
 
