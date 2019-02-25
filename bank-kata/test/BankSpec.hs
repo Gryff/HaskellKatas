@@ -16,12 +16,12 @@ import Bank
 main :: IO ()
 main = hspec spec
 
---doStatement :: TransactionRepo (Writer String) ()
---doStatement = do
-  --deposit 200
-  --withdraw 100
-  --deposit 3000
-  --printStatement
+doStatement :: TransactionRepo (Writer String) ()
+doStatement = do
+  deposit 200
+  withdraw 100
+  deposit 3000
+  printStatement
 
 newBank = []
 
@@ -44,11 +44,18 @@ spec = do
         \date       || credit || debit || balance\n\
         \01/01/2018 || || 100.00 || -100.00\n"
 
-    --it "prints a statement" $ do
-      --execWriter (evalStateT doStatement newBank) `shouldBe` "Deposited 200 | Balance 200\nWithdrew 100 | Balance 100\nDesposited 3000 | Balance 3100\n"
+    it "does all three" $ do
+      execWriter (evalStateT doStatement newBank) `shouldBe` "\
+        \date       || credit || debit || balance\n\
+        \01/01/2018 || 200.00 || || 200.00\n\
+        \01/01/2018 || || 100.00 || 100.00\n\
+        \01/01/2018 || 3000.00 || || 3100.00\n"
 
 instance MonadStatementPrinter (Writer String) where
   printSt = tell
+
+instance MonadCurrentDateTime (Writer String) where
+  currentDateTime = pure firstOfJan2018
 
 instance MonadCurrentDateTime Identity where
   currentDateTime = pure firstOfJan2018
